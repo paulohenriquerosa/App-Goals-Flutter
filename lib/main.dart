@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/home/home_screen.dart';
 import 'utils/constants.dart';
+import 'utils/app_routes.dart';
 
 void main() {
   runApp(MyApp());
@@ -13,9 +14,7 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor: kPrimaryColor,
-        statusBarColor: kPrimaryColor,
-        statusBarIconBrightness: Brightness.dark,
-        statusBarBrightness: Brightness.dark,
+        statusBarColor: kBackgroundColor,
       ),
     );
     return MaterialApp(
@@ -23,16 +22,19 @@ class MyApp extends StatelessWidget {
       title: 'Goals',
       theme: ThemeData(
         canvasColor: kBackgroundColor,
-        textTheme: ThemeData.light().textTheme.copyWith(
+        textTheme: ThemeData.dark().textTheme.copyWith(
               headline6: TextStyle(
                 color: kPrimaryColor,
-                fontSize: 20,
+                fontSize: 24,
                 fontWeight: FontWeight.w400,
               ),
             ),
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: HomeScreen(),
+      initialRoute: AppRoutes.HOME,
+      routes: {
+        AppRoutes.HOME: (ctx) => HomeScreen(),
+      },
     );
   }
 }
