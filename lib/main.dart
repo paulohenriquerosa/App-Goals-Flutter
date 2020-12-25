@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/goal_detail/goal_detail_screen.dart';
+import 'screens/create_goal/create_goal_screen.dart';
+import 'screens/select_image/select_image_screen.dart';
 import 'utils/constants.dart';
 import 'utils/app_routes.dart';
 
@@ -14,7 +17,8 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         systemNavigationBarColor: kPrimaryColor,
-        statusBarColor: kBackgroundColor,
+        statusBarColor: kPrimaryColor,
+        statusBarBrightness: Brightness.dark,
       ),
     );
     return MaterialApp(
@@ -34,6 +38,9 @@ class MyApp extends StatelessWidget {
       initialRoute: AppRoutes.HOME,
       routes: {
         AppRoutes.HOME: (ctx) => HomeScreen(),
+        AppRoutes.GOAL_DETAIL: (ctx) => GoalDetailScreen(),
+        AppRoutes.CREATE_GOAL: (ctx) => CreateGoalScreen(),
+        AppRoutes.SELECT_IMAGE: (ctx) => SelectImageScreen(),
       },
     );
   }

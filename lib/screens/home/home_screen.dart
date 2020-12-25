@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goals/utils/constants.dart';
 import 'components/body.dart';
+import '../../utils/app_routes.dart';
 
 class HomeScreen extends StatelessWidget {
   @override
@@ -14,8 +15,10 @@ class HomeScreen extends StatelessWidget {
         // ),
         body: Body(),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: Icon(Icons.plus_one),
+          onPressed: () {
+            Navigator.of(context).pushNamed(AppRoutes.CREATE_GOAL);
+          },
+          child: Icon(Icons.add),
           backgroundColor: kPrimaryColor,
         ),
       ),

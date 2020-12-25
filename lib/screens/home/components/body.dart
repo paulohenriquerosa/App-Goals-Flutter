@@ -30,8 +30,9 @@ class _BodyState extends State<Body> {
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
+          SizedBox(height: 32),
           CircleProgress(0.63),
-          SizedBox(height: 20),
+          SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.start,

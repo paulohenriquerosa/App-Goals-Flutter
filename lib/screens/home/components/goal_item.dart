@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:goals/utils/constants.dart';
 import '../../../model/Goal.dart';
+import '../../../utils/app_routes.dart';
 
 class GoalItem extends StatelessWidget {
   final Goal goal;
@@ -15,8 +16,13 @@ class GoalItem extends StatelessWidget {
       ),
       child: LayoutBuilder(
         builder: (ctx, constraints) {
-          return InkWell(
-            onTap: () {},
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).pushNamed(
+                AppRoutes.GOAL_DETAIL,
+                arguments: goal,
+              );
+            },
             child: Container(
               height: 112,
               decoration: BoxDecoration(
@@ -78,38 +84,42 @@ class GoalItem extends StatelessWidget {
                         ],
                       ),
                       SizedBox(height: 6),
-                      Container(
-                        margin: EdgeInsets.only(bottom: 4),
-                        width: constraints.maxWidth * 0.65,
-                        alignment: Alignment.centerRight,
-                        child: Text(
-                          '32/145',
-                          style: TextStyle(color: Color(0xFF868B90)),
-                        ),
-                      ),
-                      Container(
-                        height: 10,
-                        width: constraints.maxWidth * 0.65,
-                        child: Stack(
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey.withAlpha(55),
-                                borderRadius: BorderRadius.circular(5),
-                              ),
+                      Column(
+                        children: [
+                          Container(
+                            margin: EdgeInsets.only(bottom: 4),
+                            width: constraints.maxWidth * 0.65,
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                              '32/145',
+                              style: TextStyle(color: Color(0xFF868B90)),
                             ),
-                            FractionallySizedBox(
-                              widthFactor: .5,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: kPrimaryColor,
-                                  borderRadius: BorderRadius.circular(5),
+                          ),
+                          Container(
+                            height: 10,
+                            width: constraints.maxWidth * 0.65,
+                            child: Stack(
+                              children: [
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: Colors.grey.withAlpha(55),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
                                 ),
-                              ),
+                                FractionallySizedBox(
+                                  widthFactor: .5,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: kPrimaryColor,
+                                      borderRadius: BorderRadius.circular(5),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ],
-                        ),
-                      )
+                          )
+                        ],
+                      ),
                     ],
                   )
                 ],
