@@ -24,7 +24,7 @@ class GoalItem extends StatelessWidget {
               );
             },
             child: Container(
-              height: 112,
+              padding: EdgeInsets.symmetric(vertical: 8),
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
@@ -37,13 +37,14 @@ class GoalItem extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                      horizontal: 16,
+                      horizontal: 8,
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(16),
-                      child: Image.asset(
+                      child: Image.network(
                         goal.image,
                         height: 80,
+                        width: 80,
                         fit: BoxFit.cover,
                       ),
                     ),

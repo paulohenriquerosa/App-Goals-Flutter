@@ -6,7 +6,6 @@ final List<Goal> LIST_GOALS = [
     title: 'Fazer um App',
     description: 'Fazer um app de metas até do dia 15/20',
     image: 'assets/img/app.png',
-    completed: false,
     deadline: DateTime(2020, 12, 31),
   ),
   Goal(
@@ -14,7 +13,6 @@ final List<Goal> LIST_GOALS = [
     title: 'Falar inglês',
     description: 'Ser fluente e tentar falar com alguém nativo',
     image: 'assets/img/speack.png',
-    completed: false,
     deadline: DateTime(2021, 12, 31),
   ),
   Goal(
@@ -23,7 +21,6 @@ final List<Goal> LIST_GOALS = [
     description:
         'Perder 15Kg fazendo exercícios todos duas vezes por dia durante todos os dias.\nVou mudar minha alimentação para ficar balenceada.',
     image: 'assets/img/exercices.png',
-    completed: false,
     deadline: DateTime(2021, 3, 15),
   ),
   Goal(
@@ -31,7 +28,6 @@ final List<Goal> LIST_GOALS = [
     title: 'Desenvolver um site',
     description: 'Desenvolver o meu Portfólio',
     image: 'assets/img/site.png',
-    completed: true,
     deadline: DateTime(2021, 6, 15),
   ),
 ];

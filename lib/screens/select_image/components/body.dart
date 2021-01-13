@@ -1,16 +1,9 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:goals/providers/goal_provider.dart';
 import 'package:http/http.dart' as http;
-
-class Images {
-  final String url;
-  Images({this.url});
-
-  factory Images.fromJson(Map<String, dynamic> json) {
-    return Images(url: json['urls']['raw'] as String);
-  }
-}
+import 'package:provider/provider.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -18,17 +11,40 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  final String urlImage =
+  String urlImage1 =
       'https://api.unsplash.com/photos?client_id=AFFCxrX9TAd7X3bMd1lNLpWIv5k4cwzknMfE9pkPuAw';
+  String urlImage2 =
+      'https://api.unsplash.com/search/photos?client_id=AFFCxrX9TAd7X3bMd1lNLpWIv5k4cwzknMfE9pkPuAw';
 
-  List<Images> parseImages(String responseBody) {
-    final parsed = jsonDecode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Image>((json) => Images.fromJson(json)).toList();
+  List<dynamic> _loadedImages = [];
+  int _selectedImage;
+
+  Future<void> _loadImages({search = false, value}) async {
+    final response = await http
+        .get(!search ? urlImage1 : "$urlImage2&query=$value&per_page=20");
+    final responseParse = json.decode(response.body);
+    if (search) {
+      setState(() {
+        _loadedImages = responseParse['results'];
+      });
+    } else {
+      setState(() {
+        _loadedImages = responseParse;
+      });
+    }
   }
 
-  Future<List<Images>> loadImages(http.Client client) async {
-    final response = await client.get(urlImage);
-    return parseImages((response.body));
+  @override
+  void initState() {
+    super.initState();
+    _loadImages();
+  }
+
+  void _saveImage() {
+    if (_selectedImage != null) {
+      Provider.of<GoalProvider>(context)
+          .saveImage(_loadedImages[_selectedImage]['urls']);
+    }
   }
 
   @override
@@ -50,6 +66,13 @@ class _BodyState extends State<Body> {
                     color: Color(0xFF333333),
                     fontWeight: FontWeight.w400,
                   ),
+                  onSubmitted: (value) async {
+                    await _loadImages(value: value, search: true);
+                    setState(() {
+                      _selectedImage = null;
+                    });
+                  },
+                  textInputAction: TextInputAction.search,
                   decoration: InputDecoration(
                     hintText: 'Pesquisar...',
                     enabledBorder: InputBorder.none,
@@ -65,14 +88,59 @@ class _BodyState extends State<Body> {
             ],
           ),
         ),
+        SizedBox(height: 8),
         Expanded(
-          child: FutureBuilder<List<Images>>(
-            future: loadImages(http.Client()),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) print(snapshot.error);
-              print(snapshot.data);
-              return Center(child: CircularProgressIndicator());
-            },
+          child: Padding(
+            padding: const EdgeInsets.all(2.0),
+            child: GridView.builder(
+              itemCount: _loadedImages.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                childAspectRatio: 4 / 3,
+                crossAxisCount: 2,
+                crossAxisSpacing: 2,
+                mainAxisSpacing: 2,
+              ),
+              itemBuilder: (ctx, i) {
+                return InkWell(
+                  onTap: () {
+                    setState(() {
+                      if (_selectedImage != i)
+                        _selectedImage = i;
+                      else
+                        _selectedImage = null;
+                    });
+                  },
+                  child: Stack(
+                    fit: StackFit.expand,
+                    children: [
+                      GridTile(
+                        child: Image.network(
+                          _loadedImages[i]['urls']['small'],
+                          loadingBuilder: (ctx, child, loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return Center(child: CircularProgressIndicator());
+                          },
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      if (_selectedImage == i)
+                        DecoratedBox(
+                          child: Center(
+                            child: Icon(
+                              Icons.check,
+                              color: Colors.grey[100],
+                              size: 60,
+                            ),
+                          ),
+                          decoration: BoxDecoration(
+                            color: Color.fromRGBO(0, 0, 0, 0.7),
+                          ),
+                        ),
+                    ],
+                  ),
+                );
+              },
+            ),
           ),
         ),
       ],

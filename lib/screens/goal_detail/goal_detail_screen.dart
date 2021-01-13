@@ -37,7 +37,7 @@ class GoalDetailScreen extends StatelessWidget {
               SizedBox(height: 16),
               ClipRRect(
                 borderRadius: BorderRadius.circular(24),
-                child: Image.asset(
+                child: Image.network(
                   goal.image,
                   fit: BoxFit.cover,
                   height: 175,
@@ -50,9 +50,10 @@ class GoalDetailScreen extends StatelessWidget {
                 children: [
                   Text(
                     goal.title,
+                    textAlign: TextAlign.center,
                     style: TextStyle(
                       color: kTextColor,
-                      fontSize: 24,
+                      fontSize: 18,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -60,7 +61,7 @@ class GoalDetailScreen extends StatelessWidget {
                     'Prazo: 28/12/2020',
                     style: TextStyle(
                       color: kTextLightColor,
-                      fontSize: 14,
+                      fontSize: 12,
                       fontWeight: FontWeight.w600,
                     ),
                   )
@@ -74,7 +75,7 @@ class GoalDetailScreen extends StatelessWidget {
                 textAlign: TextAlign.start,
                 style: TextStyle(
                   color: kTextLightColor,
-                  fontSize: 18,
+                  fontSize: 14,
                 ),
               ),
               Spacer(),

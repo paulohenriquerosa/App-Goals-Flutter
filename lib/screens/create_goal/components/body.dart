@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:goals/providers/goal_provider.dart';
 import 'package:goals/utils/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import './select_image.dart';
 
 class Body extends StatefulWidget {
@@ -32,6 +34,22 @@ class _BodyState extends State<Body> {
     });
   }
 
+  final titleController = TextEditingController();
+  final descriptionController = TextEditingController();
+
+  void _createGoal() {
+    if (titleController.text.isNotEmpty &&
+        descriptionController.text.isNotEmpty &&
+        selectedDate != null) {
+      print('Salvar meta');
+      Provider.of<GoalProvider>(context, listen: false).createGoal(
+        titleController.text,
+        descriptionController.text,
+        selectedDate,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,6 +65,7 @@ class _BodyState extends State<Body> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextField(
+              controller: titleController,
               style: TextStyle(
                 color: Color(0xFF333333),
                 fontWeight: FontWeight.w400,
@@ -67,6 +86,7 @@ class _BodyState extends State<Body> {
               borderRadius: BorderRadius.circular(12),
             ),
             child: TextField(
+              controller: descriptionController,
               keyboardType: TextInputType.multiline,
               maxLines: null,
               style: TextStyle(
@@ -99,7 +119,7 @@ class _BodyState extends State<Body> {
                   _showDatePicker(context);
                 },
                 child: Text(
-                  'Selecionar prazo',
+                  selectedDate == null ? 'Selecionar prazo' : 'Modificar prazo',
                   style: TextStyle(color: Colors.white),
                 ),
                 color: kPrimaryColor,
@@ -114,7 +134,10 @@ class _BodyState extends State<Body> {
               borderRadius: BorderRadius.circular(8),
             ),
             height: 50,
-            onPressed: () {},
+            onPressed: () {
+              _createGoal();
+              Navigator.of(context).pop();
+            },
             child: Text(
               '+ Criar meta',
               style: TextStyle(

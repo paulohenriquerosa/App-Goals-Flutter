@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goals/providers/goal_provider.dart';
+import 'package:provider/provider.dart';
 import '../../../utils/app_routes.dart';
 
 class SelectImage extends StatelessWidget {
@@ -8,7 +10,9 @@ class SelectImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    String imageUrl = Provider.of<GoalProvider>(context).image;
+
+    return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(AppRoutes.SELECT_IMAGE);
       },
@@ -19,24 +23,36 @@ class SelectImage extends StatelessWidget {
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
         ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text(
-              'Selecionar uma imagem',
-              style: TextStyle(
-                color: Color(0xFF797E88),
-                fontWeight: FontWeight.w400,
-                fontSize: 18,
-                letterSpacing: 1,
+        child: imageUrl != null
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(16),
+                child: Image.network(
+                  imageUrl,
+                  loadingBuilder: (ctx, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Center(child: CircularProgressIndicator());
+                  },
+                  fit: BoxFit.cover,
+                ),
+              )
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Selecionar uma imagem',
+                    style: TextStyle(
+                      color: Color(0xFF797E88),
+                      fontWeight: FontWeight.w400,
+                      fontSize: 18,
+                      letterSpacing: 1,
+                    ),
+                  ),
+                  Icon(
+                    Icons.cloud_download_outlined,
+                    color: Color(0xFF797E88),
+                  ),
+                ],
               ),
-            ),
-            Icon(
-              Icons.cloud_download_outlined,
-              color: Color(0xFF797E88),
-            ),
-          ],
-        ),
       ),
     );
   }

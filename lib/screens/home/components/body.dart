@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:goals/providers/goal_provider.dart';
 import 'package:goals/utils/constants.dart';
+import 'package:provider/provider.dart';
 import 'circle_progress.dart';
 import 'goals_list.dart';
 import '../../../model/Goal.dart';
-import '../../../data/goals.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -11,27 +12,17 @@ class Body extends StatefulWidget {
 }
 
 class _BodyState extends State<Body> {
-  List<Goal> _completedGoals;
-  List<Goal> _progressGoals;
   bool _progressList = true;
 
   @override
-  void initState() {
-    super.initState();
-    _completedGoals =
-        LIST_GOALS.where((goal) => goal.completed == true).toList();
-    _progressGoals =
-        LIST_GOALS.where((goal) => goal.completed == false).toList();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    List<Goal> goals = Provider.of<GoalProvider>(context).goals;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           SizedBox(height: 32),
-          CircleProgress(0.63),
+          CircleProgress(0.5),
           SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -119,7 +110,7 @@ class _BodyState extends State<Body> {
           ),
           SizedBox(height: 6),
           Expanded(
-            child: GoalList(_progressList ? _progressGoals : _completedGoals),
+            child: GoalList(_progressList ? goals : goals),
           ),
         ],
       ),

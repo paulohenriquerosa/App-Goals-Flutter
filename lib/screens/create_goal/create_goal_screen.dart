@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:goals/providers/goal_provider.dart';
+import 'package:provider/provider.dart';
 import './components/body.dart';
 import 'package:goals/utils/constants.dart';
 
@@ -20,6 +22,7 @@ class CreateGoalScreen extends StatelessWidget {
         elevation: 0,
         leading: IconButton(
           onPressed: () {
+            Provider.of<GoalProvider>(context, listen: false).clear();
             Navigator.of(context).pop();
           },
           icon: Icon(Icons.arrow_back),
