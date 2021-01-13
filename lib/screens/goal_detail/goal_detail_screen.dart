@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:goals/providers/goal_provider.dart';
 import 'package:goals/utils/constants.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import '../../model/Goal.dart';
 
 class GoalDetailScreen extends StatelessWidget {
@@ -126,14 +128,20 @@ class GoalDetailScreen extends StatelessWidget {
               SizedBox(height: 16),
               FlatButton(
                 minWidth: double.infinity,
-                color: kPrimaryColor,
+                color: goal.completed ? Colors.green : kPrimaryColor,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(8),
                 ),
                 height: 50,
-                onPressed: () {},
+                onPressed: goal.completed
+                    ? () {}
+                    : () {
+                        Provider.of<GoalProvider>(context, listen: false)
+                            .completeGoal(goal.id);
+                        Navigator.of(context).pop();
+                      },
                 child: Text(
-                  'Concluido',
+                  goal.completed ? 'Completada' : 'Concluido',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 18,

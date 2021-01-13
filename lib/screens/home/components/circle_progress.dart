@@ -4,9 +4,15 @@ import 'package:goals/utils/constants.dart';
 class CircleProgress extends StatelessWidget {
   final double sizeCircle = 160;
 
-  final double percentage;
+  final int totalGoals;
+  final int completedGoals;
 
-  const CircleProgress(this.percentage);
+  const CircleProgress(this.totalGoals, this.completedGoals);
+
+  double percentage() {
+    if (totalGoals == 0) return 0;
+    return ((100 * completedGoals) / totalGoals / 100);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +27,9 @@ class CircleProgress extends StatelessWidget {
                 return SweepGradient(
                   startAngle: 0.0,
                   endAngle: 3.14 * 2,
-                  stops: [percentage, percentage],
+                  stops: [percentage(), percentage()],
                   center: Alignment.center,
-                  colors: [kPrimaryColor, Colors.grey.withAlpha(15)],
+                  colors: [kPrimaryColor, Colors.grey.withAlpha(50)],
                 ).createShader(rect);
               },
               child: Container(
@@ -56,7 +62,7 @@ class CircleProgress extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      '6/12',
+                      '$completedGoals/$totalGoals',
                       style: TextStyle(
                         color: Color(0xFF090909),
                         fontSize: 28,

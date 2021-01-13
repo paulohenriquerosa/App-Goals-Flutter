@@ -21,6 +21,8 @@ class _SelectImageScreenState extends State<SelectImageScreen> {
   List<dynamic> _loadedImages = [];
   int _selectedImage;
 
+  final searchController = TextEditingController();
+
   Future<void> _loadImages({search = false, value}) async {
     final response = await http
         .get(!search ? urlImage1 : "$urlImage2&query=$value&per_page=20");
@@ -95,6 +97,7 @@ class _SelectImageScreenState extends State<SelectImageScreen> {
               children: [
                 Expanded(
                   child: TextField(
+                    controller: searchController,
                     style: TextStyle(
                       color: Color(0xFF333333),
                       fontWeight: FontWeight.w400,
@@ -115,7 +118,10 @@ class _SelectImageScreenState extends State<SelectImageScreen> {
                 ),
                 IconButton(
                   icon: Icon(Icons.search),
-                  onPressed: () {},
+                  onPressed: () async {
+                    await _loadImages(
+                        value: searchController.text, search: true);
+                  },
                   color: Color(0xFFB1B2B8),
                 )
               ],

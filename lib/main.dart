@@ -16,13 +16,13 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setSystemUIOverlayStyle(
-      SystemUiOverlayStyle(
-        systemNavigationBarColor: kPrimaryColor,
-        statusBarColor: kPrimaryColor,
-        statusBarBrightness: Brightness.dark,
-      ),
-    );
+    // SystemChrome.setSystemUIOverlayStyle(
+    //   SystemUiOverlayStyle(
+    //     systemNavigationBarColor: kPrimaryColor,
+    //     statusBarColor: kBackgroundColor,
+    //     statusBarBrightness: Brightness.light,
+    //   ),
+    // );
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).requestFocus(new FocusNode());

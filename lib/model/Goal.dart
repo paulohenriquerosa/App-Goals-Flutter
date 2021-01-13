@@ -5,8 +5,8 @@ class Goal {
   final String title;
   final String image;
   final String description;
-  final bool completed = false;
-  final DateTime create = DateTime.now();
+  final bool completed;
+  final DateTime create;
   final DateTime deadline;
 
   Goal({
@@ -15,5 +15,7 @@ class Goal {
     @required this.title,
     @required this.deadline,
     @required this.description,
+    @required this.completed,
+    @required this.create,
   });
 }

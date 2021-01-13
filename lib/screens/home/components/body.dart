@@ -15,13 +15,19 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    final goals = Provider.of<GoalProvider>(context).goals;
+    final goalsProvider = Provider.of<GoalProvider>(context);
+
+    final goalItems = goalsProvider.goals;
+
+    final completedGoals = goalsProvider.completedGoals;
+    final progressGoals = goalsProvider.progressGoals;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           SizedBox(height: 32),
-          CircleProgress(.2),
+          CircleProgress(goalItems.length, completedGoals.length),
           SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -109,10 +115,13 @@ class _BodyState extends State<Body> {
           ),
           SizedBox(height: 6),
           Expanded(
-            child: goals.isEmpty
+            child: progressGoals.isEmpty && _progressList ||
+                    completedGoals.isEmpty && !_progressList
                 ? Center(
                     child: Text(
-                      'Não há objetivos criados!',
+                      _progressList
+                          ? 'Não há objetivos criados!'
+                          : 'Não há objetivos concluidos!',
                       style: TextStyle(
                         color: Colors.grey[500],
                         fontSize: 20,
@@ -120,7 +129,7 @@ class _BodyState extends State<Body> {
                       ),
                     ),
                   )
-                : GoalList(_progressList ? goals : goals),
+                : GoalList(_progressList ? progressGoals : completedGoals),
           ),
         ],
       ),

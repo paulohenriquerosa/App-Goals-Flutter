@@ -8,11 +8,6 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        // appBar: AppBar(
-        //   centerTitle: true,
-        //   backgroundColor: kBackgroundColor,
-        //   elevation: 0,
-        // ),
         body: Body(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {
