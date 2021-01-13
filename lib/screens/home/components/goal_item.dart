@@ -8,6 +8,13 @@ class GoalItem extends StatelessWidget {
 
   GoalItem(this.goal);
 
+  double _differenceDay() {
+    int totalDay = goal.deadline.difference(goal.create).inDays;
+    int currentDay = DateTime.now().difference(goal.create).inDays;
+
+    return (currentDay * 100) / totalDay / 100;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -75,7 +82,7 @@ class GoalItem extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            '16 dias',
+                            "${goal.deadline.difference(DateTime.now()).inDays.toString()} dias",
                             style: TextStyle(
                               color: kPrimaryColor,
                               fontSize: 14,
@@ -92,7 +99,7 @@ class GoalItem extends StatelessWidget {
                             width: constraints.maxWidth * 0.65,
                             alignment: Alignment.centerRight,
                             child: Text(
-                              '32/145',
+                              "${goal.create.difference(DateTime.now()).inDays.toString()}/${goal.deadline.difference(goal.create).inDays.toString()}",
                               style: TextStyle(color: Color(0xFF868B90)),
                             ),
                           ),
@@ -108,7 +115,7 @@ class GoalItem extends StatelessWidget {
                                   ),
                                 ),
                                 FractionallySizedBox(
-                                  widthFactor: .5,
+                                  widthFactor: _differenceDay(),
                                   child: Container(
                                     decoration: BoxDecoration(
                                       color: kPrimaryColor,

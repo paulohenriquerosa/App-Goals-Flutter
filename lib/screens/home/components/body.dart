@@ -4,7 +4,6 @@ import 'package:goals/utils/constants.dart';
 import 'package:provider/provider.dart';
 import 'circle_progress.dart';
 import 'goals_list.dart';
-import '../../../model/Goal.dart';
 
 class Body extends StatefulWidget {
   @override
@@ -16,13 +15,13 @@ class _BodyState extends State<Body> {
 
   @override
   Widget build(BuildContext context) {
-    List<Goal> goals = Provider.of<GoalProvider>(context).goals;
+    final goals = Provider.of<GoalProvider>(context).goals;
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Column(
         children: [
           SizedBox(height: 32),
-          CircleProgress(0.5),
+          CircleProgress(.2),
           SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,7 +109,18 @@ class _BodyState extends State<Body> {
           ),
           SizedBox(height: 6),
           Expanded(
-            child: GoalList(_progressList ? goals : goals),
+            child: goals.isEmpty
+                ? Center(
+                    child: Text(
+                      'Não há objetivos criados!',
+                      style: TextStyle(
+                        color: Colors.grey[500],
+                        fontSize: 20,
+                        fontWeight: FontWeight.w400,
+                      ),
+                    ),
+                  )
+                : GoalList(_progressList ? goals : goals),
           ),
         ],
       ),

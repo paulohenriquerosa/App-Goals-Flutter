@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:goals/utils/constants.dart';
 
 class CircleProgress extends StatelessWidget {
-  final double sizeCircle = 200;
+  final double sizeCircle = 160;
 
   final double percentage;
 
@@ -38,8 +38,8 @@ class CircleProgress extends StatelessWidget {
             Center(
               child: Container(
                 alignment: Alignment.center,
-                width: sizeCircle - 20,
-                height: sizeCircle - 20,
+                width: sizeCircle - 25,
+                height: sizeCircle - 25,
                 decoration: BoxDecoration(
                   color: kBackgroundColor,
                   shape: BoxShape.circle,
@@ -52,14 +52,14 @@ class CircleProgress extends StatelessWidget {
                       'Total de objetivos',
                       style: TextStyle(
                         color: Color(0xFF797E88),
-                        fontSize: 18,
+                        fontSize: 14,
                       ),
                     ),
                     Text(
                       '6/12',
                       style: TextStyle(
                         color: Color(0xFF090909),
-                        fontSize: 48,
+                        fontSize: 28,
                       ),
                     ),
                   ],

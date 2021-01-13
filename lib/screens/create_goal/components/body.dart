@@ -27,7 +27,6 @@ class _BodyState extends State<Body> {
     if (datePicker == null) {
       return;
     }
-    print(datePicker);
 
     setState(() {
       selectedDate = datePicker;
@@ -37,17 +36,18 @@ class _BodyState extends State<Body> {
   final titleController = TextEditingController();
   final descriptionController = TextEditingController();
 
-  void _createGoal() {
+  bool _createGoal() {
     if (titleController.text.isNotEmpty &&
         descriptionController.text.isNotEmpty &&
         selectedDate != null) {
-      print('Salvar meta');
       Provider.of<GoalProvider>(context, listen: false).createGoal(
         titleController.text,
         descriptionController.text,
         selectedDate,
       );
+      return true;
     }
+    return false;
   }
 
   @override
@@ -135,8 +135,10 @@ class _BodyState extends State<Body> {
             ),
             height: 50,
             onPressed: () {
-              _createGoal();
-              Navigator.of(context).pop();
+              if (_createGoal()) {
+                Provider.of<GoalProvider>(context, listen: false).clear();
+                Navigator.of(context).pop();
+              }
             },
             child: Text(
               '+ Criar meta',

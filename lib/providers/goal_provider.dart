@@ -11,6 +11,10 @@ class GoalProvider with ChangeNotifier {
 
   List<Goal> get goals => [..._goals];
 
+  int get goalCount {
+    return _goals.length;
+  }
+
   void saveImage(String image) {
     _image = image;
     notifyListeners();

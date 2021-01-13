@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:goals/utils/constants.dart';
+import 'package:intl/intl.dart';
 import '../../model/Goal.dart';
 
 class GoalDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Goal goal = ModalRoute.of(context).settings.arguments as Goal;
+
+    double _differenceDay() {
+      int totalDay = goal.deadline.difference(goal.create).inDays;
+      int currentDay = goal.create.difference(DateTime.now()).inDays;
+      return (currentDay * 100) / totalDay / 100;
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -58,7 +65,7 @@ class GoalDetailScreen extends StatelessWidget {
                     ),
                   ),
                   Text(
-                    'Prazo: 28/12/2020',
+                    'Prazo: ${DateFormat('dd/MM/yyyy').format(goal.deadline)}',
                     style: TextStyle(
                       color: kTextLightColor,
                       fontSize: 12,
@@ -87,7 +94,7 @@ class GoalDetailScreen extends StatelessWidget {
                     width: constraints.maxWidth,
                     alignment: Alignment.centerRight,
                     child: Text(
-                      '32/145',
+                      "${goal.create.difference(DateTime.now()).inDays.toString()}/${goal.deadline.difference(goal.create).inDays.toString()}",
                       style: TextStyle(color: Color(0xFF868B90)),
                     ),
                   ),
@@ -103,7 +110,7 @@ class GoalDetailScreen extends StatelessWidget {
                           ),
                         ),
                         FractionallySizedBox(
-                          widthFactor: .5,
+                          widthFactor: _differenceDay(),
                           child: Container(
                             decoration: BoxDecoration(
                               color: kPrimaryColor,
